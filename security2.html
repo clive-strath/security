@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Parking Lot Availability Page</title>
+  <link rel="stylesheet" href="reg.css">
+</head>
+<body>
+<header>
+  <h1>Available Parking Lots</h1>
+</header>
+<main>
+  <section class="parking-lots">
+    <h2>Parking Lots</h2>
+    <table>
+      <thead>
+      <tr>
+        <th>Parking Lot Name </th>
+        <th>Available Slots </th>
+        <th>Action </th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>Lot A</td>
+        <td id="lotA-slots">5</td>
+        <td>
+          <button onclick="updateSlots('lotA', 1)">+</button>
+          <button onclick="updateSlots('lotA', -1)">-</button>
+        </td>
+      </tr>
+      <tr>
+        <td>Lot B</td>
+        <td id="lotB-slots">3</td>
+        <td>
+          <button onclick="updateSlots('lotB', 1)">+</button>
+          <button onclick="updateSlots('lotB', -1)">-</button>
+        </td>
+      </tr>
+      <tr>
+        <td>Lot C</td>
+        <td id="lotC-slots">0</td>
+        <td>
+          <button onclick="updateSlots('lotC', 1)">+</button>
+          <button onclick="updateSlots('lotC', -1)" disabled>-</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </section>
+</main>
+<footer>
+  <p>© 2023 Parking System. All rights reserved.</p>
+</footer>
+
+<script>
+  function updateSlots(lot, change) {
+    const slotElement = document.getElementById(`${lot}-slots`);
+    let currentSlots = parseInt(slotElement.innerText);
+    currentSlots += change;
+
+    // Ensure slots do not go below 0
+    if (currentSlots < 0) {
+      currentSlots = 0;
+    }
+
+    slotElement.innerText = currentSlots;
+
+    // Disable the "-" button if there are no available slots
+    const minusButton = document.querySelector(`tr:has(td:contains('${lot}')) button:nth-child(2)`);
+    if (currentSlots === 0) {
+      minusButton.disabled = true;
+    } else {
+      minusButton.disabled = false;
+    }
+  }
+</script>
+</body>
+</html>
